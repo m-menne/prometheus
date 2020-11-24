@@ -5,7 +5,9 @@ __pycache__/
 
 # C extensions
 *.so
-
+*.pt
+yolo_detector/yolov5/runs
+Dockerfile
 # Distribution / packaging
 .Python
 build/
