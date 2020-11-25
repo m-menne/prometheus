@@ -1,7 +1,6 @@
+"""Export downscaled data for faster precessing."""
 import os
 import glob
-import matplotlib.pyplot as plt
-import matplotlib.image as mpimg
 import skimage.io
 import skimage.transform
 import time

@@ -1,6 +1,6 @@
+"""Load data into class."""
 import os
 import glob
-import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
 import skimage.io
 import skimage.transform
@@ -30,7 +30,7 @@ COCO_INSTANCE_CATEGORY_NAMES = [
 class CityScapesNumpy:
     """Class to store data as numpy array."""
 
-    FOLDERS = ["stuttgart_00"] #, "stuttgart_01", "stuttgart_02"]
+    FOLDERS = ["stuttgart_00"]  # , "stuttgart_01", "stuttgart_02"]
 
     def __init__(self, base_dir="D:/Random/Cityscapes/leftImg8bit_demoVideo/leftImg8bit/demoVideo/downsized/",
                  detections_path="D:/Random/Cityscapes/leftImg8bit_demoVideo/leftImg8bit/demoVideo/point_rcnn.csv",
@@ -57,7 +57,8 @@ class CityScapesNumpy:
             for image_path in tqdm(images):
                 img = skimage.io.imread(image_path)
                 img_shape = np.shape(img)
-                out_shape = (int(img_shape[0] * self.downscale_factor), int(img_shape[1] * self.downscale_factor), 3)
+                out_shape = (int(img_shape[0] * self.downscale_factor),
+                             int(img_shape[1] * self.downscale_factor), 3)
 
                 downscaled = skimage.transform.resize(img, out_shape)
                 # downscaled = skimage.util.img_as_ubyte(downscaled)
@@ -107,5 +108,5 @@ if __name__ == "__main__":
     data_set = CityScapesNumpy()
 
     for i, _ in enumerate(data_set):
-        img, bx, lbl, scrs = data_set.get_idx(i)
-        plot_detections(img, bx, lbl, scrs, categories=[1, 2, 3, 4, 5, 6, 7, 8, 8, 10])
+        img_, bx_, lbl_, scrs_ = data_set.get_idx(i)
+        # plot_detections(img_, bx_, lbl_, scrs_, categories=[1, 2, 3, 4, 5, 6, 7, 8, 8, 10])

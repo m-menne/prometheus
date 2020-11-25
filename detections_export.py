@@ -1,14 +1,9 @@
 """Export PointRCNN detections to csv."""
 import os
 import glob
-import matplotlib.pyplot as plt
-import matplotlib.image as mpimg
 import skimage.io
-import skimage.transform
 import time
-import numpy as np
 from tqdm import tqdm
-import torch
 import torchvision
 import pandas as pd
 
@@ -54,7 +49,7 @@ for folder in FOLDERS:
 
         img = skimage.io.imread(image_path)
         tensor = transform(img)
-        frame_predictions = MODEL([tensor])[0] # only one image per batch ...
+        frame_predictions = MODEL([tensor])[0]  # only one image per batch ...
 
         # print(frame_predictions)
   
@@ -64,9 +59,7 @@ for folder in FOLDERS:
             labels.append(frame_predictions['labels'][i].detach().numpy())
             scores.append(frame_predictions['scores'][i].detach().numpy())
 
-df = pd.DataFrame({'Frame name': frames, 'Box': bboxes,'Label': labels,'Score': scores})
+df = pd.DataFrame({'Frame name': frames, 'Box': bboxes, 'Label': labels, 'Score': scores})
 df.to_csv(TARGET_PATH)
-            
-
 
 print(time.time() - start)

@@ -1,4 +1,4 @@
-"""Tracking utilties"""
+"""Tracking utilities."""
 
 
 def iou_2d(boxA, boxB):

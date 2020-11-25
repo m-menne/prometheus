@@ -5,7 +5,7 @@ Cython
 matplotlib>=3.2.2
 numpy>=1.18.5
 opencv-python>=4.1.2
-Pillow
+Pillow~=8.0.1
 PyYAML>=5.3
 scipy>=1.4.1
 tensorboard>=2.2
@@ -18,7 +18,7 @@ tqdm>=4.41.0
 
 # plotting ------------------------------------
 seaborn
-pandas
+pandas~=1.1.4
 
 # export --------------------------------------
 # coremltools==4.0
@@ -28,3 +28,5 @@ pandas
 # extras --------------------------------------
 # thop  # FLOPS computation
 # pycocotools>=2.0  # COCO mAP
+
+scikit-image~=0.17.2
