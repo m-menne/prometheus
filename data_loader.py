@@ -27,12 +27,15 @@ COCO_INSTANCE_CATEGORY_NAMES = [
 ]
 
 
-def plot_detections(img, boxes, labels, scores, categories, score_thresh=0.5):
+def plot_detections(img, boxes, labels, scores, categories, ids=None, score_thresh=0.5):
     """"""
 
     for i, _ in enumerate(scores):
         if scores[i] > score_thresh and labels[i] in categories:
             x1, y1, x2, y2 = boxes[i]
+
+            if ids is not None:
+                plt.text(x1, y1, str(ids[i]))
 
             col = _COLORS[labels[i]]
             plt.plot([x1, x1], [y1, y2], color=col)
