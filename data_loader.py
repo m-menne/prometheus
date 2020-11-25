@@ -47,10 +47,10 @@ def plot_detections(img, boxes, labels, scores, categories, score_thresh=0.5):
 class CityScapesNumpy:
     """Class to store data as numpy array."""
 
-    FOLDERS = ["stuttgart_00"]  # , "stuttgart_01", "stuttgart_02"]
+    FOLDERS = ["stuttgart_00", "stuttgart_01", "stuttgart_02"]
 
     def __init__(self, base_dir="D:/Random/Cityscapes/leftImg8bit_demoVideo/leftImg8bit/demoVideo/downsized/",
-                 detections_path="C:/Users/Danilo/Desktop/test/point_rcnn.csv",
+                 detections_path="D:/Random/Cityscapes/leftImg8bit_demoVideo/leftImg8bit/demoVideo/point_rcnn.csv",
                  downscale_factor=1.0):
         """"""
         self.detections = pd.read_csv(detections_path)
@@ -112,8 +112,16 @@ class CityScapesNumpy:
         frame_name = self.frames[idx]
         return self.get(frame_name)
 
+    def __len__(self):
+        return len(self.frames)
+
+    def __get_item__(self, idx):
+        return self.get_idx(idx)
+
 
 if __name__ == "__main__":
     data_set = CityScapesNumpy()
-    img, bx, lbl, scrs = data_set.get_idx(0)
-    plot_detections(img, bx, lbl, scrs, categories=[1, 2, 3, 4, 5, 6, 7, 8, 8, 10])
+
+    for i, _ in enumerate(data_set):
+        img, bx, lbl, scrs = data_set.get_idx(i)
+        plot_detections(img, bx, lbl, scrs, categories=[1, 2, 3, 4, 5, 6, 7, 8, 8, 10])
