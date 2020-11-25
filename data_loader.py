@@ -47,7 +47,7 @@ def plot_detections(img, boxes, labels, scores, categories, score_thresh=0.5):
 class CityScapesNumpy:
     """Class to store data as numpy array."""
 
-    FOLDERS = ["stuttgart_00", "stuttgart_01", "stuttgart_02"]
+    FOLDERS = ["stuttgart_00"] #, "stuttgart_01", "stuttgart_02"]
 
     def __init__(self, base_dir="D:/Random/Cityscapes/leftImg8bit_demoVideo/leftImg8bit/demoVideo/downsized/",
                  detections_path="D:/Random/Cityscapes/leftImg8bit_demoVideo/leftImg8bit/demoVideo/point_rcnn.csv",
@@ -102,7 +102,7 @@ class CityScapesNumpy:
         boxes_np = [np.fromstring(bx, dtype=float, sep=' ') for bx in boxes_clipped]
 
         # Maybe downscale bounding boxes
-        boxes_np = [bx * 0.3 for bx in boxes_np]
+        boxes_np = np.array([bx * 0.3 for bx in boxes_np])
 
         return img_np, boxes_np, labels.to_numpy(), scores.to_numpy()
 
