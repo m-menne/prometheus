@@ -35,9 +35,13 @@ def plot_detections(img, boxes, labels, scores, categories, ids=None, score_thre
             x1, y1, x2, y2 = boxes[i]
 
             if ids is not None:
-                plt.text(x1, y1, str(ids[i]))
+                string = str(COCO_INSTANCE_CATEGORY_NAMES[labels[i]]) + " " + str(ids[i]) + ", score: " + "{:.3f}".format(scores[i])
+                col_idx = ids[i]  if ids[i] < len(_COLORS) else ids[i] % len(_COLORS)
+                col = _COLORS[col_idx]
+                plt.text(x1, y1-10, string, color=col, fontsize=10)
+            else:
+                col = _COLORS[labels[i]]
 
-            col = _COLORS[labels[i]]
             plt.plot([x1, x1], [y1, y2], color=col)
             plt.plot([x2, x2], [y1, y2], color=col)
             plt.plot([x1, x2], [y1, y1], color=col)
