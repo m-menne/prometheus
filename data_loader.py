@@ -27,30 +27,6 @@ COCO_INSTANCE_CATEGORY_NAMES = [
 ]
 
 
-def plot_detections(img, boxes, labels, scores, categories, ids=None, score_thresh=0.5):
-    """"""
-
-    for i, _ in enumerate(scores):
-        if scores[i] > score_thresh and labels[i] in categories:
-            x1, y1, x2, y2 = boxes[i]
-
-            if ids is not None:
-                string = str(COCO_INSTANCE_CATEGORY_NAMES[labels[i]]) + " " + str(ids[i]) + ", score: " + "{:.3f}".format(scores[i])
-                col_idx = ids[i]  if ids[i] < len(_COLORS) else ids[i] % len(_COLORS)
-                col = _COLORS[col_idx]
-                plt.text(x1, y1-10, string, color=col, fontsize=10)
-            else:
-                col = _COLORS[labels[i]]
-
-            plt.plot([x1, x1], [y1, y2], color=col)
-            plt.plot([x2, x2], [y1, y2], color=col)
-            plt.plot([x1, x2], [y1, y1], color=col)
-            plt.plot([x2, x1], [y2, y2], color=col)
-
-    plt.imshow(img)
-    plt.show()
-
-
 class CityScapesNumpy:
     """Class to store data as numpy array."""
 
@@ -68,7 +44,7 @@ class CityScapesNumpy:
         self.data = None
         self.frames = None
 
-        self._load()
+        # self._load()
 
     def _load(self):
         """"""
@@ -96,11 +72,12 @@ class CityScapesNumpy:
 
     def get(self, frame: str):
         """Returns image and bounding box annotations for frame."""
-        assert frame in self.frames, "Frame not known..."
+        # assert frame in self.frames, "Frame not known..."
 
-        idx = self.frames.index(frame)
-        img_np = self.data[idx]
-        detections = self.detections.loc[self.detections['Frame name'] == frame]
+        # idx = self.frames.index(frame)
+        img_np = skimage.io.imread(frame)
+        # img_np = self.data[idx]
+        detections = self.detections.loc[self.detections['Frame name'] == os.path.basename(frame)]
         boxes, labels, scores = detections['Box'], detections['Label'], detections['Score']
 
         # Hotfix for wrong data classes...
@@ -109,7 +86,7 @@ class CityScapesNumpy:
         boxes_np = [np.fromstring(bx, dtype=float, sep=' ') for bx in boxes_clipped]
 
         # Maybe downscale bounding boxes
-        boxes_np = np.array([bx * 0.3 for bx in boxes_np])
+        boxes_np = np.array([bx * self.downscale_factor for bx in boxes_np])
 
         return img_np, boxes_np, labels.to_numpy(), scores.to_numpy()
 
